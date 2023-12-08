@@ -21,7 +21,11 @@ import "phoenix_html";
 import { LiveSocket } from "phoenix_live_view";
 // Establish Phoenix Socket and LiveView configuration.
 import { Socket } from "phoenix";
+import footerText from "./footerText";
 import topbar from "../vendor/topbar";
+
+const footer = document.getElementById("footer");
+footer.innerHTML = footerText();
 
 let csrfToken = document
   .querySelector("meta[name='csrf-token']")
