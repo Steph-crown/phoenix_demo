@@ -20,8 +20,12 @@ defmodule DemoWeb.Router do
     get "/", PageController, :home
     get "/chats", ChatController, :index
 
+    get "/products", ProductController, :index
+
     # new route to handle live view.
     live "/chat", ChatLive
+
+    live "/messages", MessagesLive
   end
 
   # Other scopes may use custom stacks.

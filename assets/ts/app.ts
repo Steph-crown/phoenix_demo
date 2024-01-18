@@ -18,20 +18,59 @@
 // Include phoenix_html to handle method=PUT/DELETE in forms and buttons.
 import "phoenix_html";
 
+import { ChatProps } from "./Chat";
 import { LiveSocket } from "phoenix_live_view";
 // Establish Phoenix Socket and LiveView configuration.
 import { Socket } from "phoenix";
 import footerText from "./footerText";
+import mount from "./mount";
 import topbar from "../vendor/topbar";
 
 const footer = document.getElementById("footer");
-footer.innerHTML = footerText();
+if (footer) footer.innerHTML = footerText();
+
+// create the hooks object.
+let Hooks = {};
+
+// create the Chat hook.
+Hooks.Chat = {
+  mounted() {
+    this.handleEvent("react.add-message", ({ messages }) => {
+      mount(this.el.id, this.getProps(messages));
+    });
+
+    this.unmountComponent = mount(this.el.id, this.getProps());
+  },
+
+  destroyed() {
+    if (!this.unmountComponent) {
+      console.error("Greeter unmountComponent not set");
+      return;
+    }
+
+    this.unmountComponent();
+  },
+
+  addMessage(message: string) {
+    this.pushEventTo(this.el, "phx.add-message", { message });
+  },
+
+  getProps(messages: string[]): ChatProps {
+    return {
+      messages: messages,
+      addMessage: this.addMessage.bind(this),
+    };
+  },
+};
 
 let csrfToken = document
   .querySelector("meta[name='csrf-token']")
-  .getAttribute("content");
+  ?.getAttribute("content");
 let liveSocket = new LiveSocket("/live", Socket, {
   params: { _csrf_token: csrfToken },
+
+  // add the hooks object to the LiveSocket configuration.
+  hooks: Hooks,
 });
 
 // Show progress bar on live navigation and form submits

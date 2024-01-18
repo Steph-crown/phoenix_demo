@@ -1,0 +1,8 @@
+<h1>Messages here: holla.</h1>
+
+<div>
+  <%!-- loop through messages in socket assigns --%>
+  <%= for message <- @messages do %>
+    <p><%= message %></p>
+  <% end %>
+</div>
