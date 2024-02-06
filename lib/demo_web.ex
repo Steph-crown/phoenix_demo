@@ -30,6 +30,9 @@ defmodule DemoWeb do
     end
   end
 
+  @spec channel() ::
+          {:use, [{:column, 7} | {:context, DemoWeb} | {:imports, [...]}, ...],
+           [{:__aliases__, [...], [...]}, ...]}
   def channel do
     quote do
       use Phoenix.Channel

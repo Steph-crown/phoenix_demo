@@ -32,3 +32,8 @@ defmodule DemoWeb.ChatLive do
     {:noreply, push_event(socket, "react.add-message", %{messages: messages})}
   end
 end
+
+# Oops! It seems there's an issue connecting to your application. Please follow the instructions listed in the task and ensure your application is running.
+
+
+# and when the server wants to push messages to the clients subscribed to a topic,

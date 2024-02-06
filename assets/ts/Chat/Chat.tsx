@@ -18,7 +18,7 @@ const Chat: FC<ChatProps> = ({ messages, addMessage }) => {
       <h1>Chat Messages</h1>
       <ul>
         {messages?.map((message, index) => (
-          <li key={index}>{message}</li>
+          <li key={message}>{message}</li>
         ))}
       </ul>
       <form onSubmit={handleAddMessage}>
